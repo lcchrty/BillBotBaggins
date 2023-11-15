@@ -3,6 +3,21 @@ const { getSalesForceAccessToken } = require("./authRouter.js");
 
 const salesforceRouter = {};
 
+/*const createConfig = (method, url, data) => {
+  return {
+    method,
+    maxBodyLength: Infinity,
+    url,
+    headers: {
+      "X-Chatter-Entity-Encoding": "false",
+      "Content-Type": "application/json",
+      Authorization: process.env.SALESFORCE_TOKEN,
+      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
+    },
+    data,
+  };
+};
+*/
 salesforceRouter.getStripeId = async (recordId) => {
   const access_token = await getSalesForceAccessToken();
   const data = JSON.stringify({
