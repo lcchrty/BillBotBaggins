@@ -3,6 +3,21 @@ const { getSalesForceAccessToken } = require("./authRouter.js");
 
 const salesforceRouter = {};
 
+/*const createConfig = (method, url, data) => {
+  return {
+    method,
+    maxBodyLength: Infinity,
+    url,
+    headers: {
+      "X-Chatter-Entity-Encoding": "false",
+      "Content-Type": "application/json",
+      Authorization: process.env.SALESFORCE_TOKEN,
+      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
+    },
+    data,
+  };
+};
+*/
 salesforceRouter.getStripeId = async (recordId) => {
   const access_token = await getSalesForceAccessToken();
   const data = JSON.stringify({
@@ -32,7 +47,6 @@ salesforceRouter.getStripeId = async (recordId) => {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
       Authorization: `Bearer ${access_token}`,
-      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
   };
@@ -72,7 +86,6 @@ salesforceRouter.getPaymentType = async (id) => {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
       Authorization: `Bearer ${access_token}`,
-      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
   };
@@ -122,7 +135,6 @@ salesforceRouter.getOppRecordId = async (id) => {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
       Authorization: `Bearer ${access_token}`,
-      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
   };
@@ -183,11 +195,11 @@ salesforceRouter.retreiveOppType = async (id) => {
       "X-Chatter-Entity-Encoding": "false",
       "Content-Type": "application/json",
       Authorization: `Bearer ${access_token}`,
-      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
   };
   const fetchOppType = await axios.request(config);
+  console.log();
   const {
     Id,
     Type,
@@ -202,6 +214,7 @@ salesforceRouter.retreiveOppType = async (id) => {
     account_name: Account.Name.value,
     sf_opp_id: Id,
   };
+  console.log("opportunity returned from record opp func: ", opportunity);
   return opportunity;
 };
 
@@ -224,7 +237,6 @@ salesforceRouter.updateSalesforceStripeId = async (
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${access_token}`,
-      Cookie: process.env.SALESFORCE_COOKIE_AUTH,
     },
     data: data,
   };
