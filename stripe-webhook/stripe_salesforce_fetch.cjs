@@ -81,7 +81,8 @@ const salesforcePaid = async (stripeId) => {
 
   // take the data back from the query and access the record id for the respective salesforce record id
   const recordId =
-    fetchedRecordData.data.data.uiapi.query.npe01__OppPayment__c.edges[0];
+    fetchedRecordData.data.data.uiapi.query.npe01__OppPayment__c.edges[0].node
+      .Id;
 
   // get the current date in a format acceptable by salesforce
   const currentDate = new Date(
